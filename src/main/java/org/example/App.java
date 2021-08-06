@@ -1,7 +1,9 @@
 package org.example;
 
+import com.github.racc.tscg.TypesafeConfigModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.jd.rec.jrf.SystemConfig;
 import com.twitter.finagle.Http;
 import com.twitter.finagle.ListeningServer;
 import com.twitter.finagle.Service;
@@ -31,27 +33,32 @@ import java.util.logging.Logger;
 public class App {
 
     private static final Logger logger = Logger.getLogger(App.class.getName());
+    private static final String GUICE_SCAN_PACKAGE_NAME_PREFIX = "org.example";
 
     public static void main( String[] args ) throws TimeoutException, InterruptedException {
         PropertyConfigurator.configure(App.class.getResourceAsStream("/log4j.properties"));
-        Config config = ConfigFactory.parseFile(new File("config/system.conf")).resolve();
+        Config config = ConfigFactory.parseFile(new File("config/application.conf")).resolve();
+        final SystemConfig systemConfig = new SystemConfig(config);
         Injector injector = Guice.createInjector(
                 new TestModule(),
-                new ConfigModule(config)
+                new ConfigModule(config),
+            TypesafeConfigModule.fromConfigWithPackage(systemConfig.config,
+                GUICE_SCAN_PACKAGE_NAME_PREFIX)
         );
         TestService testService = injector.getInstance(TestService.class);
         ZkService zkService = injector.getInstance(ZkService.class);
-        Service<Request, Response> service = new TestHanlder().andThen(
+        Service<Request, Response> service =
                 new HttpMuxer().withHandler(
                    "/test", testService
                 ).withHandler(
                    "/zkTest", zkService
-                )
-        );
+                );
+
         int port = config.getConfig("server").getInt("port");
         ListeningServer server = Http.server()
                 .withCompressionLevel(2)
                 .serve(new InetSocketAddress(port), service);
+        testService.start();
         Await.ready(server);
         logger.info("Server is started at port : " + port);
     }

@@ -1,12 +1,10 @@
 package org.example.service;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
-import com.twitter.finagle.http.Status;
 import com.twitter.util.Future;
 import com.twitter.util.Promise;
 

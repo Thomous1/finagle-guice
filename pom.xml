@@ -65,12 +65,6 @@
       <artifactId>curator-recipes</artifactId>
       <version>4.3.0</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.typesafe/config -->
-    <dependency>
-      <groupId>com.typesafe</groupId>
-      <artifactId>config</artifactId>
-      <version>1.3.1</version>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/log4j/log4j -->
     <dependency>
       <groupId>log4j</groupId>
@@ -83,10 +77,58 @@
       <version>1.7.25</version>
       <scope>compile</scope>
     </dependency>
+    <!--jrf-->
     <dependency>
-      <groupId>com.github.racc</groupId>
-      <artifactId>typesafeconfig-guice</artifactId>
-      <version>0.0.3</version>
+      <groupId>com.jd.jrf</groupId>
+      <artifactId>config</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.reflections</groupId>
+          <artifactId>reflections</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.jd.jrf</groupId>
+      <artifactId>jrf-grpc-sd</artifactId>
+      <version>1.0.16-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.jd.jrf</groupId>
+      <artifactId>jrf-jsf-register-discover</artifactId>
+      <version>1.0.16-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.12</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jd.jrf</groupId>
+      <artifactId>jrf-fiber</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jd.rec</groupId>
+      <artifactId>graph-engine-java</artifactId>
+      <version>0.0.7-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.jd.rec</groupId>
+      <artifactId>graph-parser-java</artifactId>
+      <version>0.0.2-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.chrisvest</groupId>
+      <artifactId>stormpot</artifactId>
+      <version>3.1</version>
     </dependency>
   </dependencies>
 
